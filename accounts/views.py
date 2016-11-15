@@ -20,20 +20,31 @@ def index(request):
 def autenticar_usuario(request):
     next = request.POST.get('next', request.GET.get('next', ''))
     if request.method == 'POST':
-        username = request.POST['usuario']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect(next)
+        if request.POST.get('login'):
+            username = request.POST['usuario']
+            password = request.POST['password']
+
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect(next)
+                else:
+                    # Return a 'disabled account' error message
+                    print ("Fail")
+
             else:
-                # Return a 'disabled account' error message
-                print ("Fail")
-
+                # Return an 'invalid login' error message.
+                print('invalid login')
         else:
-            # Return an 'invalid login' error message.
-            print('invalid login')
-
+            first_name = request.POST['nombre']
+            last_name = request.POST['apellido']
+            email = request.POST['email']
+            password = request.POST['password']
+            username = request.POST['username']
+            user = User.objects.create_user(username, email, password)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
     else:
         return render(request, 'log_in.html')
