@@ -11,7 +11,7 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
         }
     } else if (e.type === 'blur') {
     	if( $this.val() === '' ) {
-    		label.removeClass('active highlight'); 
+    		label.removeClass('active highlight');
 			} else {
 		    label.removeClass('highlight');   
 			}   
