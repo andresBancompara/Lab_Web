@@ -7,11 +7,13 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from perfil.models import Cuenta
 from perfil.forms import CuentaForm
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
-
-# Create your views here.
-def index_perfil(request):
-    return HttpResponse("Pagina principal")
+@login_required()
+def index(request):
+    data = Cuenta.objects.get(id=1)
+    response = JsonResponse(model_to_dict(data))
+    return response
 
 class CuentaList(ListView):
     model = Cuenta
@@ -70,3 +72,4 @@ class CuentaDelete(DeleteView):
     model = Cuenta
     template_name = 'cuenta_delete.html'
     success_url = reverse_lazy('perfil:cuenta_listar')
+

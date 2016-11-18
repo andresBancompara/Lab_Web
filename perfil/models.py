@@ -14,7 +14,7 @@ class Cuenta(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     banco = models.ForeignKey(Banco, on_delete=models.CASCADE)
     numero_cuenta = models.CharField(verbose_name="Numero de cuenta", max_length=100, blank=True)
-    clabe = models.BigIntegerField(unique=True, null=True, blank=True)# maximo 18
+    clabe = models.CharField(unique=True, blank=True)# maximo 18
     tipo_cuenta = models.CharField(verbose_name="Tipo de cuenta", max_length=100)
     monto = models.BigIntegerField(default=0)
     t_tarjeta_debito = models.BooleanField(default=False)
