@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib.auth import *
-from oauth2client import client, crypt
+#from oauth2client import client, crypt
 import json
 from .models import *
 from django.contrib.auth.models import User

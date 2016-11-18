@@ -1,0 +1,54 @@
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+{% block content %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>Usuario</td>
+			<td>Banco</td>
+			<td>No. Cuenta</td>
+			<td>Clabe</td>
+			<td>Tipo de cuenta</td>
+            <td>Monto</td>
+            <td>Tiene tarjeta de debito</td>
+            <td>No. Tarjeta</td>
+            <td>Tasa inflacion</td>
+            <td>Plazo</td>
+
+
+		</tr>
+
+	</thead>
+	<tbody>
+		{% if object_list %}
+		<form action="" method="post">{%csrf_token%}
+		{% for cuenta in object_list %}
+		<tr>
+			<td>{{ cuenta.id }}</td>
+			<td>{{ cuenta.usuario }} </td>
+			<td>{{ cuenta.banco }}</td>
+			<td>{{ cuenta.numero_cuenta}}</td>
+            <td>{{ cuenta.clabe}}</td>
+            <td>{{ cuenta.tipo_cuenta}}</td>
+            <td>{{ cuenta.monto}}</td>
+            <td>{{ cuenta.t_tarjeta_debito}}</td>
+            <td>{{ cuenta.num_tarjeta}}</td>
+            <td>{{ cuenta.tasa_inflacion}}</td>
+            <td>{{ cuenta.plazo}}</td>
+
+			<td>
+				<button class="btn btn-primary" type="submit" value="Confirm">Eliminar</button>
+			</td>
+		</tr>
+		{% endfor %}
+
+		{% else %}
+		<h1>No hay registros de solicitudes</h1>
+		</form>
+		{% endif %}
+	</tbody>
+</table>
+
+{% endblock%}
