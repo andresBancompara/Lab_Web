@@ -5,7 +5,7 @@ from .models import *
 from django.forms.models import model_to_dict
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from perfil.models import Cuenta
-from perfil.forms import CuentaForm
+from perfil.forms import FormaCuenta
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
@@ -22,7 +22,7 @@ class CuentaList(ListView):
 class CuentaCreate(CreateView):
     model = Cuenta
     template_name = 'cuenta_form.html'
-    form_class = CuentaForm
+    form_class = FormaCuenta
     success_url = reverse_lazy('perfil:cuenta_listar')
 
     def get_context_data(self, **kwargs):
@@ -45,7 +45,7 @@ class CuentaCreate(CreateView):
 class CuentaUpdate(UpdateView):
     model = Cuenta
     template_name = 'cuenta_form.html'
-    form_class = CuentaForm
+    form_class = FormaCuenta
     success_url = reverse_lazy('perfil:cuenta_listar')
 
     def get_context_data(self, **kwargs):
@@ -54,7 +54,7 @@ class CuentaUpdate(UpdateView):
         cuenta = self.model.objects.get(id=pk)
         if 'form' not in context:
             context['form'] = self.form_class()
-        context['id'] = pk;
+        context['id'] = pk
         return context
 
     def post(self, request, *args, **kwargs):
