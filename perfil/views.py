@@ -9,15 +9,19 @@ from perfil.forms import FormaCuenta
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
+
 @login_required()
 def index(request):
-    data = Cuenta.objects.get(id=1)
+    username = request.session['username']
+    data = Cuenta.objects.get(usuario=User.objects.get(username=username))
     response = JsonResponse(model_to_dict(data))
     return response
+
 
 class CuentaList(ListView):
     model = Cuenta
     template_name = 'cuenta_list.html'
+
 
 class CuentaCreate(CreateView):
     model = Cuenta
@@ -27,7 +31,7 @@ class CuentaCreate(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CuentaCreate, self).get_context_data(**kwargs)
-        if'form' not in context:
+        if 'form' not in context:
             context['form'] = self.form_class(self.request.GET)
         return context
 
@@ -37,7 +41,7 @@ class CuentaCreate(CreateView):
         if form.is_valid():
             cuenta = form.save()
             cuenta.save()
-            return HttpResponseRedirect (self.get_success_url())
+            return HttpResponseRedirect(self.get_success_url())
         else:
             return self.render_to_response(self.get_context_data(form=form))
 
@@ -68,8 +72,8 @@ class CuentaUpdate(UpdateView):
         else:
             return HttpResponseRedirect(self.get_success_url())
 
+
 class CuentaDelete(DeleteView):
     model = Cuenta
     template_name = 'cuenta_delete.html'
     success_url = reverse_lazy('perfil:cuenta_listar')
-

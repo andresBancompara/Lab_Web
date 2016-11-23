@@ -11,10 +11,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
+from django.core.mail import send_mail
+
 
 @login_required()
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+def logout_view(request):
+    logout(request)
+    # Redirect to a success page.
 
 
 def autenticar_usuario(request):
@@ -27,6 +30,7 @@ def autenticar_usuario(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
+                    request.session['username'] = username
                     login(request, user)
                     return HttpResponseRedirect(next)
                 else:
@@ -46,5 +50,16 @@ def autenticar_usuario(request):
             user.first_name = first_name
             user.last_name = last_name
             user.save()
+
+            #Email sending
+            send_mail(
+                'Registro Chromium' + first_name + ' ' + last_name,
+                'Gracias ' + first_name + ' por registrar tus datos.Ya puedes acceder con tus datos a nuestra plataforma con tu usuario: ' + username,
+                'andresvillavicencio92@gmail.com',
+                [email],
+                fail_silently=False,
+            )
+
+            return render(request, 'log_in.html')
     else:
         return render(request, 'log_in.html')

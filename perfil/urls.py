@@ -1,9 +1,9 @@
 from django.conf.urls import url
 from . import views
-from perfil.views import index_perfil, CuentaList, CuentaCreate, CuentaUpdate, CuentaDelete
+from perfil.views import index, CuentaList, CuentaCreate, CuentaUpdate, CuentaDelete
 
 urlpatterns = [
-    url(r'^index', index_perfil),
+    url(r'^', index),
     url(r'^listar', CuentaList.as_view(), name='cuenta_listar'),
     url(r'^nuevo', CuentaCreate.as_view(), name='cuenta_crear'),
     url(r'^editar/(?P<pk>\d+)', CuentaUpdate.as_view(), name='cuenta_editar'),
