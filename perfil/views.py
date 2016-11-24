@@ -14,8 +14,9 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     username = request.session['username']
     data = Cuenta.objects.get(usuario=User.objects.get(username=username))
-    response = JsonResponse(model_to_dict(data))
-    return response
+    return render(request, 'index.html')
+    # response = JsonResponse(model_to_dict(data))
+    # return response
 
 
 class CuentaList(ListView):
