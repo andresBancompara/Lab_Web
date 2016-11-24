@@ -14,15 +14,17 @@
     <script src="/static/js/TinySort.js"></script>
 </head>
 <body>
-
+    <p>Bienvenido {{ usuario.first_name }}</p>
     <div id="chart"></div>
     <script>
+        var data1=[{{ Cuenta.monto }}];
+
         var chart = c3.generate({
     data: {
         // iris data from R
         columns: [
-            ['data1', 30],
-            ['data2', 120],
+            ['data1', data1],
+            ['data2', data1],
         ],
         type : 'pie',
         onclick: function (d, i) { console.log("onclick", d, i); },

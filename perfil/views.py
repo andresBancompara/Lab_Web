@@ -13,8 +13,9 @@ from django.contrib.auth.decorators import login_required
 @login_required()
 def index(request):
     username = request.session['username']
-    data = Cuenta.objects.get(usuario=User.objects.get(username=username))
-    return render(request, 'index.html')
+    usuario = User.objects.get(username=username)
+    cuenta = Cuenta.objects.get(usuario=usuario)
+    return render(request, 'index.html', {'Cuenta': cuenta, 'usuario': usuario})
     # response = JsonResponse(model_to_dict(data))
     # return response
 
