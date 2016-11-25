@@ -2,9 +2,37 @@
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
 {% block content %}
-<form method="post">
-	{% csrf_token %}
-    {{form.as_p}}
+<form action="" method="POST">
+    {% csrf_token %}
+{#    {{ form.usuario  }}#}
+{#    <label for="banco">banco:</label><br>#}
+{#    {{ form.banco }}#}
+{#    <br>#}
+{#    <label for="numero_cuenta">numero_cuenta:</label><br>#}
+{#    {{ form.numero_cuenta }}#}
+{#    <br>#}
+{#    <label for="clabe">clabe:</label><br>#}
+{#    {{ form.clabe }}#}
+{#    <br>#}
+{#    <label for="tipo_cuenta">tipo_cuenta:</label><br>#}
+{#    {{ form.tipo_cuenta }}#}
+{#    <br>#}
+{#    <label for="monto">monto:</label><br>#}
+{#    {{ form.monto }}#}
+{#    <br>#}
+{#    <label for="t_tarjeta_debito">t_tarjeta_debito:</label><br>#}
+{#    {{ form.t_tarjeta_debito }}#}
+{#    <br>#}
+{#    <label for="monto">num_tarjeta:</label><br>#}
+{#    {{ form.num_tarjeta }}#}
+{#    <br>#}
+{#    <label for="monto">tasa_inflacion:</label><br>#}
+{#    {{ form.tasa_inflacion }}#}
+{#    <br>#}
+{#    <label for="plazo">plazo:</label><br> #}
+{#    {{ form.plazo }}#}
+{#     <br>#}
+    {{ form.as_table }}
     <button type="submit"> Guardar</button>
 </form>
 {% endblock %}
