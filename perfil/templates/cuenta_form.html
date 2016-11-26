@@ -4,35 +4,34 @@
 {% block content %}
 <form action="" method="POST">
     {% csrf_token %}
-{#    {{ form.usuario  }}#}
-{#    <label for="banco">banco:</label><br>#}
-{#    {{ form.banco }}#}
-{#    <br>#}
-{#    <label for="numero_cuenta">numero_cuenta:</label><br>#}
-{#    {{ form.numero_cuenta }}#}
-{#    <br>#}
-{#    <label for="clabe">clabe:</label><br>#}
-{#    {{ form.clabe }}#}
-{#    <br>#}
-{#    <label for="tipo_cuenta">tipo_cuenta:</label><br>#}
-{#    {{ form.tipo_cuenta }}#}
-{#    <br>#}
-{#    <label for="monto">monto:</label><br>#}
-{#    {{ form.monto }}#}
-{#    <br>#}
-{#    <label for="t_tarjeta_debito">t_tarjeta_debito:</label><br>#}
-{#    {{ form.t_tarjeta_debito }}#}
-{#    <br>#}
-{#    <label for="monto">num_tarjeta:</label><br>#}
-{#    {{ form.num_tarjeta }}#}
-{#    <br>#}
-{#    <label for="monto">tasa_inflacion:</label><br>#}
-{#    {{ form.tasa_inflacion }}#}
-{#    <br>#}
-{#    <label for="plazo">plazo:</label><br> #}
-{#    {{ form.plazo }}#}
-{#     <br>#}
-    {{ form.as_table }}
+    {{ form.usuario  }}
+    <label for="banco">Banco:</label><br>
+    {{ form.banco }}
+    <br>
+    <label for="numero_cuenta">Numero de cuenta:</label><br>
+    {{ form.numero_cuenta }}
+    <br>
+    <label for="clabe">CLABE:</label><br>
+    {{ form.clabe }}
+    <br>
+    <label for="tipo_cuenta">Tipo de Cuenta:</label><br>
+    {{ form.tipo_cuenta }}
+    <br>
+    <label for="monto">Monto:</label><br>
+    {{ form.monto }}
+    <br>
+    <label for="t_tarjeta_debito">Tiene trajeta de credito?</label><br>
+    {{ form.t_tarjeta_debito }}
+    <br>
+    <label for="monto">Numero de tarjeta de credito</label><br>
+    {{ form.num_tarjeta }}
+    <br>
+    <label for="monto">Tasa de inflacion</label><br>
+    {{ form.tasa_inflacion }}
+    <br>
+    <label for="plazo">Plazo</label><br> 
+    {{ form.plazo }}
+     <br>
     <button type="submit"> Guardar</button>
 </form>
 {% endblock %}

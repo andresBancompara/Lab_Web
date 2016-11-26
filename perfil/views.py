@@ -15,10 +15,14 @@ from tokenapi.http import JsonResponse, JsonError
 
 @login_required()
 def index(request):
+    monto_total = 0
     username = request.session['username']
     usuario = User.objects.get(username=username)
-    cuenta = Cuenta.objects.get(usuario=usuario)
-    return render(request, 'index.html', {'Cuenta': cuenta, 'usuario': usuario})
+    cuenta = Cuenta.objects.filter(usuario=usuario)
+    for c in cuenta:
+        monto_total += c.monto
+    print monto_total
+    return render(request, 'index.html', {'monto_total': monto_total, 'usuario': usuario})
     # response = JsonResponse(model_to_dict(data))
     # return response
 
