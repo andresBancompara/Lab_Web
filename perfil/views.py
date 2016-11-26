@@ -32,7 +32,7 @@ def postPrueba(request):
 
 
 
-@login_required()
+@token_required
 def FormularioRegistro(request):
     username = request.session['username']
     id_usuario = User.objects.get(username=username).id
