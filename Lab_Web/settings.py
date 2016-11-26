@@ -39,7 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'accounts',
     'perfil',
-    'tokenapi'
+    'tokenapi',
+    'corsheaders',
 
 )
 AUTHENTICATION_BACKENDS = (
@@ -52,6 +53,7 @@ AUTHENTICATION_BACKENDS = (
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -119,6 +121,27 @@ STATICFILES_DIRS = [
 ]
 # Flag para pedir el active
 TOKEN_CHECK_ACTIVE_USER=False
+
+#Flag para aceptar requests de todos los sitios, recomendado y luego cachar en el middleware
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_METHODS = (
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS'
+)
+
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken'
+)
 # ------------ E-mail ------------
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
