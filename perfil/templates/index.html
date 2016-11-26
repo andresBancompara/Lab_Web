@@ -17,7 +17,7 @@
     <p>Bienvenido {{ usuario.first_name }}</p>
     <div id="chart"></div>
     <script>
-        var data1=[{{ Cuenta.monto }}];
+        var data1=[{{ monto_total }}];
 
         var chart = c3.generate({
     data: {
