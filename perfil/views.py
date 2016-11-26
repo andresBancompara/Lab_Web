@@ -34,17 +34,22 @@ def postPrueba(request):
 
 @token_required
 def FormularioRegistro(request):
-    username = request.session['username']
-    id_usuario = User.objects.get(username=username).id
-    user = User.objects.get(username=username)
+    #username = request.session['username']
+
+    #id_usuario = User.objects.get(username=username).id
+    #user = User.objects.get(username=username)
+
 
     if request.method == 'POST':
+        print ("entro el post")
         # create a form instance and populate it with data from the request:
         form = FormaCuenta(request.POST)
         # check whether it's valid:
         if form.is_valid():
-
-            form.users = request.user
+            username = form.cleaned_data['usuario']
+            #id_usuario = User.objects.get(username=username).id
+            user = User.objects.get(username=username)
+            #form.users = request.user
             # process the data in form.cleaned_data as required
             # usuario = form.cleaned_data
             banco = form.cleaned_data['banco']
@@ -75,9 +80,10 @@ def FormularioRegistro(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
+        print ("no entro el post")
         form = FormaCuenta()
 
-    context = {'form': form, 'usuario': user}
+    context = {'form': form}
     return render(request, 'cuenta_form.html', context)
 
 
