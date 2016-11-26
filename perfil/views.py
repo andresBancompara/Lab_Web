@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
@@ -11,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import *
 from tokenapi.decorators import token_required
 from tokenapi.http import JsonResponse, JsonError
+import json
 
 
 @login_required()
@@ -43,52 +45,79 @@ def FormularioRegistro(request):
     #id_usuario = User.objects.get(username=username).id
     #user = User.objects.get(username=username)
 
+    body=json.loads(request.body)
 
     if request.method == 'POST':
         print ("entro el post")
+        username = body['username']
+        user = User.objects.get(username=username)
+        banco_nombre = body['banco']
+        numero_cuenta = body['numero_cuenta']
+        clabe = body['clabe']
+        tipo_cuenta = body['tipo_cuenta']
+        monto = body['monto']
+        t_tarjeta_debito = body['t_tarjeta_debito']
+        num_tarjeta = body['num_tarjeta']
+        tasa_inflacion = body['tasa_inflacion']
+        plazo = body['plazo']
+
+        banco = Banco.objects.get(nombre=banco_nombre)
+        cuenta = Cuenta(usuario=user,
+                                banco=banco,
+                                numero_cuenta=numero_cuenta,
+                                clabe=clabe,
+                                tipo_cuenta=tipo_cuenta,
+                                monto=monto,
+                                t_tarjeta_debito=t_tarjeta_debito,
+                                num_tarjeta=num_tarjeta,
+                                tasa_inflacion=tasa_inflacion,
+                                plazo=plazo)
+        cuenta.save()
         # create a form instance and populate it with data from the request:
-        form = FormaCuenta(request.POST)
+        # form = FormaCuenta(request.body)
         # check whether it's valid:
-        if form.is_valid():
-            username = form.cleaned_data['usuario']
-            #id_usuario = User.objects.get(username=username).id
-            user = User.objects.get(username=username)
-            #form.users = request.user
-            # process the data in form.cleaned_data as required
-            # usuario = form.cleaned_data
-            banco = form.cleaned_data['banco']
-            numero_cuenta = form.cleaned_data['numero_cuenta']
-            clabe = form.cleaned_data['clabe']
-            tipo_cuenta = form.cleaned_data['tipo_cuenta']
-            monto = form.cleaned_data['monto']
-            t_tarjeta_debito = form.cleaned_data['t_tarjeta_debito']
-            num_tarjeta = form.cleaned_data['num_tarjeta']
-            tasa_inflacion = form.cleaned_data['tasa_inflacion']
-            plazo = form.cleaned_data['plazo']
-            form.save(commit=False)
-            cuenta = Cuenta(usuario=user,
-                            banco=banco,
-                            numero_cuenta=numero_cuenta,
-                            clabe=clabe,
-                            tipo_cuenta=tipo_cuenta,
-                            monto=monto,
-                            t_tarjeta_debito=t_tarjeta_debito,
-                            num_tarjeta=num_tarjeta,
-                            tasa_inflacion=tasa_inflacion,
-                            plazo=plazo)
-            cuenta.save()
-            print "hola"
-            # redirect to a new URL:
-            return HttpResponseRedirect('/convenios/')
-
-
-    # if a GET (or any other method) we'll create a blank form
+    #     if form.is_valid():
+    #         username = form.cleaned_data['usuario']
+    #         #id_usuario = User.objects.get(username=username).id
+    #         user = User.objects.get(username=username)
+    #         #form.users = request.user
+    #         # process the data in form.cleaned_data as required
+    #         # usuario = form.cleaned_data
+    #         banco = form.cleaned_data['banco']
+    #         numero_cuenta = form.cleaned_data['numero_cuenta']
+    #         clabe = form.cleaned_data['clabe']
+    #         tipo_cuenta = form.cleaned_data['tipo_cuenta']
+    #         monto = form.cleaned_data['monto']
+    #         t_tarjeta_debito = form.cleaned_data['t_tarjeta_debito']
+    #         num_tarjeta = form.cleaned_data['num_tarjeta']
+    #         tasa_inflacion = form.cleaned_data['tasa_inflacion']
+    #         plazo = form.cleaned_data['plazo']
+    #         form.save(commit=False)
+    #         cuenta = Cuenta(usuario=user,
+    #                         banco=banco,
+    #                         numero_cuenta=numero_cuenta,
+    #                         clabe=clabe,
+    #                         tipo_cuenta=tipo_cuenta,
+    #                         monto=monto,
+    #                         t_tarjeta_debito=t_tarjeta_debito,
+    #                         num_tarjeta=num_tarjeta,
+    #                         tasa_inflacion=tasa_inflacion,
+    #                         plazo=plazo)
+    #         cuenta.save()
+    #         print "hola"
+    #         # redirect to a new URL:
+    #         return HttpResponseRedirect('/convenios/')
+    #
+    #
+    # # if a GET (or any other method) we'll create a blank form
     else:
         print ("no entro el post")
-        form = FormaCuenta()
+        #form = FormaCuenta()
+        data ={'Success': False}
 
-    context = {'form': form}
-    return render(request, 'cuenta_form.html', context)
+    data = {'Success': True}
+    response = JsonResponse(data)
+    return response
 
 
 class CuentaList(ListView):
