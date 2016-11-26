@@ -1,12 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
 from .models import *
 from django.forms.models import model_to_dict
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from .forms import *
+from tokenapi.decorators import token_required
+from tokenapi.http import JsonResponse, JsonError
 
 
 @login_required()
@@ -17,6 +21,15 @@ def index(request):
     return render(request, 'index.html', {'Cuenta': cuenta, 'usuario': usuario})
     # response = JsonResponse(model_to_dict(data))
     # return response
+
+
+@token_required
+def postPrueba(request):
+    if request.method == 'POST':
+        print "hola"
+    print "puto"
+    return HttpResponseRedirect('/convenios/')
+
 
 
 @login_required()

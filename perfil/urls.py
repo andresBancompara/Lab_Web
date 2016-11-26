@@ -4,6 +4,7 @@ from perfil.views import *
 
 urlpatterns = [
     url(r'^index', index),
+    url(r'^prueba', postPrueba),
     url(r'^Registrar', FormularioRegistro),
     url(r'^listar', CuentaList.as_view(), name='cuenta_listar'),
     url(r'^nuevo', CuentaCreate.as_view(), name='cuenta_crear'),
