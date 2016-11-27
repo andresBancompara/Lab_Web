@@ -67,7 +67,12 @@ def agregarCuenta(request):
 def modificarCuenta(request, pk):
     body = json.loads(request.body)
 
-    if request.method == 'POST':
+    if request.method == 'DELETE':
+        cuenta = Cuenta.objects.get(pk=pk)
+        cuenta.delete()
+        data = {'Success': 'Eliminado'}
+
+    if request.method == 'PUT':
         banco_nombre = body['banco']
         banco = Banco.objects.get(nombre=banco_nombre)
         numero_cuenta = body['numero_cuenta']
@@ -93,15 +98,6 @@ def modificarCuenta(request, pk):
 
     else:
         data = {'Success': False}
-    response = JsonResponse(data)
-    return response
-
-
-@token_required
-def eliminarCuenta(request, pk):
-    cuenta = Cuenta.objects.get(pk=pk)
-    cuenta.delete()
-    data = {'Success': True}
     response = JsonResponse(data)
     return response
 
