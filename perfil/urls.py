@@ -8,10 +8,12 @@ urlpatterns = [
     url(r'^index', index),
 
     # CRUD Cuentas
-    url(r'^cuenta', postPrueba),
-    url(r'^cuenta/nueva', agregarCuenta),
-    url(r'^cuenta/editar/(?P<pk>\d+)', agregarCuenta),
-    url(r'^cuenta/eliminar/(?P<pk>\d+)', agregarCuenta),
+    url(r'^cuenta', include([
+        url(r'^agregar/$', agregarCuenta),
+        url(r'^modificar/(?P<pk>\d+)', modificarCuenta),
+        url(r'^eliminar/(?P<pk>\d+)', eliminarCuenta),
+        url(r'^consultar/$', consultarCuenta),
+    ])),
 
     # CRUD Tarjetas
     url(r'^tarjeta', include([

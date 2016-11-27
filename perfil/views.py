@@ -79,15 +79,22 @@ def modificarCuenta(request, pk):
         tasa_inflacion = body['tasa_inflacion']
         plazo = body['plazo']
 
-    Cuenta.objects.filter(id=pk).update(banco=banco,
-                                        numero_cuenta=numero_cuenta,
-                                        clabe=clabe,
-                                        tipo_cuenta=tipo_cuenta,
-                                        monto=monto,
-                                        t_tarjeta_debito=t_tarjeta_debito,
-                                        num_tarjeta=num_tarjeta,
-                                        tasa_inflacion=tasa_inflacion,
-                                        plazo=plazo)
+        Cuenta.objects.filter(id=pk).update(banco=banco,
+                                            numero_cuenta=numero_cuenta,
+                                            clabe=clabe,
+                                            tipo_cuenta=tipo_cuenta,
+                                            monto=monto,
+                                            t_tarjeta_debito=t_tarjeta_debito,
+                                            num_tarjeta=num_tarjeta,
+                                            tasa_inflacion=tasa_inflacion,
+                                            plazo=plazo)
+
+        data = {'Success': True}
+
+    else:
+        data = {'Success': False}
+    response = JsonResponse(data)
+    return response
 
 
 @token_required
@@ -98,6 +105,11 @@ def eliminarCuenta(request, pk):
     response = JsonResponse(data)
     return response
 
+
+def consultarCuenta(request, pk):
+    cuenta = Cuenta.objects.get(pk=pk)
+    response = JsonResponse(cuenta)
+    return response
 
 @token_required
 def agregarTarjeta(request):
