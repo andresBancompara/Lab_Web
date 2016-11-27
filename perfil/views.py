@@ -36,6 +36,39 @@ def postPrueba(request):
     print "puto"
     return HttpResponseRedirect('/convenios/')
 
+@token_required
+def TarjetaRegistro(request):
+    body = json.loads(request.body)
+    if request.method == 'POST':
+        username=body['username']
+        user = User.objects.get(username=username)
+        banco_nombre = body['banco']
+        banco = Banco.objects.get(nombre=banco_nombre)
+        numero_tarjeta = body['numero_tarjeta']
+        limite_credito = body['limite_credito']
+        tasa_interes = body['tasa_interes']
+        alias = body['alias']
+        fecha_corte = body['fecha_corte']
+        saldo = body['saldo']
+        tarjetaCredito = TarjetaCredito(
+            usuario=user,
+            banco=banco,
+            numero_tarjeta=numero_tarjeta,
+            limite_credito=limite_credito,
+            tasa_interes=tasa_interes,
+            alias=alias,
+            fecha_corte=fecha_corte,
+            saldo=saldo
+        )
+        tarjetaCredito.save()
+    else:
+        print ("no entro el post")
+        data = {'Success': False}
+
+    data = {'Success': True}
+    response = JsonResponse(data)
+    return response
+
 
 
 @token_required
@@ -73,6 +106,8 @@ def FormularioRegistro(request):
                                 tasa_inflacion=tasa_inflacion,
                                 plazo=plazo)
         cuenta.save()
+
+
         # create a form instance and populate it with data from the request:
         # form = FormaCuenta(request.body)
         # check whether it's valid:
