@@ -8,15 +8,14 @@ urlpatterns = [
     url(r'^index', index),
 
     # CRUD Cuentas
-    url(r'^cuenta', include([
+    url(r'^cuenta/', include([
         url(r'^agregar/$', agregarCuenta),
         url(r'^modificar/(?P<pk>\d+)', modificarCuenta),
-        url(r'^eliminar/(?P<pk>\d+)', eliminarCuenta),
-        url(r'^consultar/$', consultarCuenta),
+            url(r'^consultar/$', consultarCuenta),
     ])),
 
     # CRUD Tarjetas
-    url(r'^tarjeta', include([
+    url(r'^tarjeta/', include([
         url(r'^agregar/$', agregarTarjeta),
         url(r'^modificar/$', agregarTarjeta),
         url(r'^eliminar/(?P<pk>\d+)', agregarTarjeta),
@@ -32,7 +31,7 @@ urlpatterns = [
     ])),
 
     # CRUD Egresos
-    url(r'^egreso', include([
+    url(r'^egreso/', include([
         url(r'^agregar/$', agregarEngreso),
         url(r'^modificar/$', agregarEngreso),
         url(r'^eliminar/(?P<pk>\d+)', agregarEngreso),
