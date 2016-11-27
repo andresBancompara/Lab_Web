@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
@@ -66,11 +67,11 @@ def agregarCuenta(request):
 @token_required
 def modificarCuenta(request, pk):
     body = json.loads(request.body)
-
+    data = ""
     if request.method == 'DELETE':
         cuenta = Cuenta.objects.get(pk=pk)
         cuenta.delete()
-        data = {'Success': 'Eliminado'}
+        data = {'Delete':'Eliminado'}
 
     if request.method == 'PUT':
         banco_nombre = body['banco']
@@ -83,21 +84,24 @@ def modificarCuenta(request, pk):
         num_tarjeta = body['num_tarjeta']
         tasa_inflacion = body['tasa_inflacion']
         plazo = body['plazo']
+        try:
+            cuenta = Cuenta.objects.get(id=pk)
+            Cuenta.objects.filter(id=pk).update(banco=banco,
+                                                numero_cuenta=numero_cuenta,
+                                                clabe=clabe,
+                                                tipo_cuenta=tipo_cuenta,
+                                                monto=monto,
+                                                t_tarjeta_debito=t_tarjeta_debito,
+                                                num_tarjeta=num_tarjeta,
+                                                tasa_inflacion=tasa_inflacion,
+                                                plazo=plazo)
 
-        Cuenta.objects.filter(id=pk).update(banco=banco,
-                                            numero_cuenta=numero_cuenta,
-                                            clabe=clabe,
-                                            tipo_cuenta=tipo_cuenta,
-                                            monto=monto,
-                                            t_tarjeta_debito=t_tarjeta_debito,
-                                            num_tarjeta=num_tarjeta,
-                                            tasa_inflacion=tasa_inflacion,
-                                            plazo=plazo)
-
-        data = {'Success': True}
-
+            data = {'PUT': 'Modificado'}
+        except ObjectDoesNotExist:
+            cuenta = None
+            data = {'Error': 'Cuenta no existe'}
     else:
-        data = {'Success': False}
+        data = {'Error': 'Header No existe'}
     response = JsonResponse(data)
     return response
 
