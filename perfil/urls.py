@@ -11,31 +11,28 @@ urlpatterns = [
     url(r'^cuenta/', include([
         url(r'^agregar/$', agregarCuenta),
         url(r'^modificar/(?P<pk>\d+)', modificarCuenta),
-            url(r'^consultar/$', consultarCuenta),
+        url(r'^consultar/$', consultarCuenta),
     ])),
 
     # CRUD Tarjetas
     url(r'^tarjeta/', include([
         url(r'^agregar/$', agregarTarjeta),
-        url(r'^modificar/$', agregarTarjeta),
-        url(r'^eliminar/(?P<pk>\d+)', agregarTarjeta),
-        url(r'^consultar/$', agregarTarjeta),
+        url(r'^modificar/(?P<pk>\d+)', modificarTarjeta),
+        url(r'^consultar/$', consultarCuenta),
     ])),
 
     # CRUD Ingresos
     url(r'^ingreso', include([
         url(r'^agregar/$', agregarIngreso),
-        url(r'^modificar/$', agregarIngreso),
-        url(r'^eliminar/(?P<pk>\d+)', agregarIngreso),
-        url(r'^consultar/$', agregarIngreso),
+        url(r'^modificar/(?P<pk>\d+)', modificarIngreso),
+        url(r'^consultar/$', consultarCuenta()),
     ])),
 
     # CRUD Egresos
     url(r'^egreso/', include([
-        url(r'^agregar/$', agregarEngreso),
-        url(r'^modificar/$', agregarEngreso),
-        url(r'^eliminar/(?P<pk>\d+)', agregarEngreso),
-        url(r'^consultar/$', agregarEngreso),
+        url(r'^agregar/$', agregarEgreso),
+        url(r'^modificar/(?P<pk>\d+)', modificarEgreso),
+        url(r'^consultar/$', consultarCuenta()),
     ])),
 
 

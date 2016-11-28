@@ -145,10 +145,41 @@ def agregarTarjeta(request):
 
 
 @token_required
-def eliminarTrajeta(request, pk):
-    tarjeta = TarjetaCredito.objects.get(pk=pk)
-    tarjeta.delete()
-    data = {'Success': True}
+def modificarTarjeta(request, pk):
+    body = json.loads(request.body)
+    data = ""
+    if request.method == 'DELETE':
+        tarjeta = TarjetaCredito.objects.get(pk=pk)
+        tarjeta.delete()
+        data = {'Delete': 'Eliminado'}
+
+    if request.method == 'PUT':
+        banco_nombre = body['banco']
+        banco = Banco.objects.get(nombre=banco_nombre)
+        numero_tarjeta = body['numero_tarjeta']
+        limite_credito = body['limite_credito']
+        tasa_interes = body['tasa_interes']
+        alias = body['alias']
+        fecha_corte = body['fecha_corte']
+        saldo = body['saldo']
+
+        try:
+            tarjeta = TarjetaCredito.objects.get(id=pk)
+            TarjetaCredito.objects.filter(id=pk).update(banco=banco,
+                                                        numero_tarjeta=numero_tarjeta,
+                                                        limite_credito=limite_credito,
+                                                        tasa_interes=tasa_interes,
+                                                        alias=alias,
+                                                        fecha_corte=fecha_corte,
+                                                        saldo=saldo
+                                                        )
+
+            data = {'PUT': 'Modificado'}
+        except ObjectDoesNotExist:
+            tarjeta = None
+            data = {'Error': 'Cuenta no existe'}
+    else:
+        data = {'Error': 'Header No existe'}
     response = JsonResponse(data)
     return response
 
@@ -185,16 +216,46 @@ def agregarIngreso(request):
 
 
 @token_required
-def eliminarIngreso(request, pk):
-    ingreso = Ingreso.objects.get(pk=pk)
-    ingreso.delete()
-    data = {'Success': True}
+def modificarIngreso(request, pk):
+    body = json.loads(request.body)
+    data = ""
+    if request.method == 'DELETE':
+        ingreso = Ingreso.objects.get(pk=pk)
+        ingreso.delete()
+        data = {'Delete': 'Eliminado'}
+
+    if request.method == 'PUT':
+        cuenta = body['cuenta']
+        nombre = body['nombre']
+        monto = body['monto']
+        recurrencia = body['recurrencia']
+        fijo = body['fijo']
+        tipo = body['tipo']
+        fecha = body['fecha']
+
+        try:
+            ingreso = Ingreso.objects.get(id=pk)
+            Ingreso.objects.filter(id=pk).update(cuenta=cuenta,
+                                                 nombre=nombre,
+                                                 monto=monto,
+                                                 recurrencia=recurrencia,
+                                                 fijo=fijo,
+                                                 tipo=tipo,
+                                                 fecha=fecha
+                                                 )
+
+            data = {'PUT': 'Modificado'}
+        except ObjectDoesNotExist:
+            ingreso = None
+            data = {'Error': 'Cuenta no existe'}
+    else:
+        data = {'Error': 'Header No existe'}
     response = JsonResponse(data)
     return response
 
 
 @token_required
-def agregarEngreso(request):
+def agregarEgreso(request):
     body = json.loads(request.body)
     if request.method == 'POST':
         username = body['username']
@@ -209,7 +270,7 @@ def agregarEngreso(request):
         fecha = body['fecha']
         financiado = body['financiado']
         plazo = body['plazo']
-        ingreso = Ingreso(usuario=user,
+        egreso = Egreso(usuario=user,
                           tarjeta=tarjeta,
                           nombre=nombre,
                           monto=monto,
@@ -219,7 +280,7 @@ def agregarEngreso(request):
                           fecha=fecha,
                           financiado=financiado,
                           plazo=plazo)
-        ingreso.save()
+        egreso.save()
         data = {'Success': True}
     else:
         print ("no entro el post")
@@ -230,10 +291,45 @@ def agregarEngreso(request):
 
 
 @token_required
-def eliminarEngreso(request, pk):
-    Engreso = Egreso.objects.get(pk=pk)
-    Engreso.delete()
-    data = {'Success': True}
+def modificarEgreso(request, pk):
+    body = json.loads(request.body)
+    data = ""
+    if request.method == 'DELETE':
+        egreso = Egreso.objects.get(pk=pk)
+        egreso.delete()
+        data = {'Delete': 'Eliminado'}
+
+    if request.method == 'PUT':
+        numero_tarjeta = body['tarjeta']
+        tarjeta = TarjetaCredito.objects.get(numero_tarjeta=numero_tarjeta)
+        nombre = body['nombre']
+        monto = body['monto']
+        recurrencia = body['recurrencia']
+        fijo = body['fijo']
+        tipo = body['tipo']
+        fecha = body['fecha']
+        financiado = body['financiado']
+        plazo = body['plazo']
+
+        try:
+            egreso = Egreso.objects.get(id=pk)
+            Egreso.objects.filter(id=pk).update(tarjeta=tarjeta,
+                                                nombre=nombre,
+                                                monto=monto,
+                                                recurrencia=recurrencia,
+                                                fijo=fijo,
+                                                tipo=tipo,
+                                                fecha=fecha,
+                                                financiado=financiado,
+                                                plazo=plazo,
+                                                )
+
+            data = {'PUT': 'Modificado'}
+        except ObjectDoesNotExist:
+            egreso = None
+            data = {'Error': 'Cuenta no existe'}
+    else:
+        data = {'Error': 'Header No existe'}
     response = JsonResponse(data)
     return response
 
