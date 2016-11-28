@@ -9,7 +9,7 @@ urlpatterns = [
 
     # CRUD Cuentas
     url(r'^cuenta/', include([
-        url(r'^agregar/$', agregarCuenta),
+        url(r'^agregar$', agregarCuenta),
         url(r'^modificar/(?P<pk>\d+)', modificarCuenta),
         url(r'^consultar/(?P<pk>\d+)', consultar),
     ])),
