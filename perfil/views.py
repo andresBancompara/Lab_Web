@@ -23,6 +23,23 @@ def index(request):
     # return response
 
 
+def consultar(request, pk):
+    usuario = User.objects.get(id=pk)
+    cuenta = Cuenta.objects.filter(usuario=usuario)\
+        .values_list('id',
+                     'banco',
+                     'numero_cuenta',
+                     'clabe',
+                     'tipo_cuenta',
+                     'monto',
+                     't_tarjeta_debito',
+                     'num_tarjeta',
+                     'tasa_inflacion',
+                     'plazo')
+    response = JsonResponse({'Cuenta': cuenta})
+    return response
+
+
 @token_required
 def agregarCuenta(request):
 
@@ -105,11 +122,6 @@ def modificarCuenta(request, pk):
     response = JsonResponse(data)
     return response
 
-
-def consultarCuenta(request, pk):
-    cuenta = Cuenta.objects.get(pk=pk)
-    response = JsonResponse(cuenta)
-    return response
 
 @token_required
 def agregarTarjeta(request):
