@@ -7,6 +7,9 @@ urlpatterns = [
     # Pagina Principal
     url(r'^index', index),
 
+    # Consultar
+    url(r'^consultar/', consultar),
+
     # CRUD Cuentas
     url(r'^cuenta/', include([
         url(r'^agregar/$', agregarCuenta),

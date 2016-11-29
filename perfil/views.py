@@ -1,4 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.core import serializers
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
@@ -23,21 +25,25 @@ def index(request):
     # return response
 
 
+@token_required
 def consultar(request, pk):
     usuario = User.objects.get(id=pk)
-    cuenta = Cuenta.objects.filter(usuario=usuario)\
-        .values_list('id',
-                     'banco',
-                     'numero_cuenta',
-                     'clabe',
-                     'tipo_cuenta',
-                     'monto',
-                     't_tarjeta_debito',
-                     'num_tarjeta',
-                     'tasa_inflacion',
-                     'plazo')
-    response = JsonResponse({'Cuenta': cuenta})
-    return response
+    cuenta = Cuenta.objects.filter(usuario=usuario)
+    tarjeta = TarjetaCredito.objects.filter(usuario=usuario)
+    ingresos = Ingreso.objects.filter(usuario=usuario)
+    egresos = Egreso.objects.filter(usuario=usuario)
+
+    cuentaJson = serializers.serialize("json", cuenta)
+    tarjetaJson = serializers.serialize("json", tarjeta)
+    ingresosJson = serializers.serialize("json", ingresos)
+    egresosJson = serializers.serialize("json", egresos)
+
+    response = '[{"Cuenta":' + cuentaJson + "}," +\
+               '{"Tarjeta":' + tarjetaJson + "}," +\
+               '{"Ingreso":' + ingresosJson + "}," +\
+               '{"Egreso":' + egresosJson + "}]"
+
+    return HttpResponse(response, content_type='application/json')
 
 
 @token_required
