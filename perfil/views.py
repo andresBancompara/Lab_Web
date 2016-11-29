@@ -129,6 +129,13 @@ def modificarCuenta(request, pk):
     return response
 
 
+
+def consultarCuenta(request, pk):
+    usuario = User.objects.get(id=pk)
+    cuenta = Cuenta.objects.filter(usuario=usuario)
+    response = serializers.serialize("json", cuenta)
+    return HttpResponse(response, content_type='application/json')
+
 @token_required
 def agregarTarjeta(request):
     body = json.loads(request.body)

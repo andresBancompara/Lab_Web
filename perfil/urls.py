@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^cuenta/', include([
         url(r'^agregar$', agregarCuenta),
         url(r'^modificar/(?P<pk>\d+)', modificarCuenta),
-        url(r'^consultar/(?P<pk>\d+)', consultar),
+        url(r'^consultar/(?P<pk>\d+)', consultarCuenta),
     ])),
 
     # CRUD Tarjetas
