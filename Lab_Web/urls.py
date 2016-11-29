@@ -18,7 +18,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('accounts.urls', namespace="account")),
-    url(r'^cuenta/', include('perfil.urls', namespace="perfil")),
+    url(r'^perfil/', include('perfil.urls', namespace="perfil")),
     url(r'', include('tokenapi.urls')),
 
 ]

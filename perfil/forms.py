@@ -2,7 +2,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from perfil.models import *
+from .models import *
 
 
 TIPOS_CUENTA = (
@@ -15,7 +15,7 @@ TIPOS_CUENTA = (
 
 
 class FormaCuenta(ModelForm):
-    # usuario = forms.CharField(widget=forms.HiddenInput(), required=False)
+    usuario = forms.CharField(widget=forms.HiddenInput(), required=True)
     banco = forms.ModelChoiceField(queryset=Banco.objects.all())
     numero_cuenta = forms.CharField(label='numero_cuenta')
     clabe = forms.CharField(label='clabe', max_length=18, help_text='Clave Bancaria Estandarizada (18 numeros).')  # maximo 18
