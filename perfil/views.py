@@ -129,12 +129,13 @@ def modificarCuenta(request, pk):
     return response
 
 
-
+@token_required
 def consultarCuenta(request, pk):
     usuario = User.objects.get(id=pk)
     cuenta = Cuenta.objects.filter(usuario=usuario)
     response = serializers.serialize("json", cuenta)
     return HttpResponse(response, content_type='application/json')
+
 
 @token_required
 def agregarTarjeta(request):
@@ -210,6 +211,14 @@ def modificarTarjeta(request, pk):
 
 
 @token_required
+def consultarTarjeta(request, pk):
+    usuario = User.objects.get(username=pk)
+    tarjeta = TarjetaCredito.objects.filter(usuario=usuario)
+    response = serializers.serialize("json", tarjeta)
+    return HttpResponse(response, content_type='application/json')
+
+
+@token_required
 def agregarIngreso(request):
     body = json.loads(request.body)
     if request.method == 'POST':
@@ -277,6 +286,14 @@ def modificarIngreso(request, pk):
         data = {'Error': 'Header No existe'}
     response = JsonResponse(data)
     return response
+
+
+@token_required
+def consultarIngreso(request, pk):
+    usuario = User.objects.get(username=pk)
+    ingreso = Ingreso.objects.filter(usuario=usuario)
+    response = serializers.serialize("json", ingreso)
+    return HttpResponse(response, content_type='application/json')
 
 
 @token_required
@@ -357,6 +374,14 @@ def modificarEgreso(request, pk):
         data = {'Error': 'Header No existe'}
     response = JsonResponse(data)
     return response
+
+
+@token_required
+def consultarEgreso(request, pk):
+    usuario = User.objects.get(username=pk)
+    egreso = Egreso.objects.filter(usuario=usuario)
+    response = serializers.serialize("json", egreso)
+    return HttpResponse(response, content_type='application/json')
 
 
 @token_required

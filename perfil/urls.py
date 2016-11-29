@@ -21,21 +21,21 @@ urlpatterns = [
     url(r'^tarjeta/', include([
         url(r'^agregar$', agregarTarjeta),
         url(r'^modificar/(?P<pk>\d+)', modificarTarjeta),
-        url(r'^consultar/(?P<pk>\d+)', consultar),
+        url(r'^consultar/(?P<pk>\d+)', consultarTarjeta),
     ])),
 
     # CRUD Ingresos
     url(r'^ingreso', include([
         url(r'^agregar$', agregarIngreso),
         url(r'^modificar/(?P<pk>\d+)', modificarIngreso),
-        url(r'^consultar/(?P<pk>\d+)', consultar),
+        url(r'^consultar/(?P<pk>\d+)', consultarIngreso),
     ])),
 
     # CRUD Egresos
     url(r'^egreso/', include([
         url(r'^agregar$', agregarEgreso),
         url(r'^modificar/(?P<pk>\d+)', modificarEgreso),
-        url(r'^consultar/(?P<pk>\d+)', consultar),
+        url(r'^consultar/(?P<pk>\d+)', consultarEgreso),
     ])),
 
 
