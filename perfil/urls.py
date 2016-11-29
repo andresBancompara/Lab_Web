@@ -9,6 +9,7 @@ urlpatterns = [
 
     # Consultar
     url(r'^consultar/', consultar),
+    url(r'^consultar/bancos', consultarBanco),
 
     # CRUD Cuentas
     url(r'^cuenta/', include([

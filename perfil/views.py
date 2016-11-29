@@ -47,6 +47,13 @@ def consultar(request, pk):
 
 
 @token_required
+def consultarBanco(request):
+    banco = Banco.objects.all()
+    response = serializers.serialize("json", banco)
+    return HttpResponse(response, content_type='application/json')
+
+
+@token_required
 def agregarCuenta(request):
 
     body = json.loads(request.body)
