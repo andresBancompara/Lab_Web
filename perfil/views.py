@@ -27,7 +27,7 @@ def index(request):
 
 @token_required
 def consultar(request, pk):
-    usuario = User.objects.get(id=pk)
+    usuario = User.objects.get(username=pk)
     cuenta = Cuenta.objects.filter(usuario=usuario)
     tarjeta = TarjetaCredito.objects.filter(usuario=usuario)
     ingresos = Ingreso.objects.filter(usuario=usuario)
@@ -131,7 +131,7 @@ def modificarCuenta(request, pk):
 
 @token_required
 def consultarCuenta(request, pk):
-    usuario = User.objects.get(id=pk)
+    usuario = User.objects.get(username=pk)
     cuenta = Cuenta.objects.filter(usuario=usuario)
     response = serializers.serialize("json", cuenta)
     return HttpResponse(response, content_type='application/json')
