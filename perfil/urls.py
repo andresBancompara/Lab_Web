@@ -8,8 +8,8 @@ urlpatterns = [
     url(r'^index', index),
 
     # Consultar
-    url(r'^consultar/', consultar),
-    url(r'^consultar/bancos', consultarBanco),
+    url(r'^consultar/$', consultar),
+    url(r'^bancos', consultarBanco),
 
     # CRUD Cuentas
     url(r'^cuenta/', include([
