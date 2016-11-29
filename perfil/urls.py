@@ -13,29 +13,29 @@ urlpatterns = [
     # CRUD Cuentas
     url(r'^cuenta/', include([
         url(r'^agregar$', agregarCuenta),
-        url(r'^modificar/(?P<pk>\d+)', modificarCuenta),
-        url(r'^consultar/(?P<pk>\d+)', consultarCuenta),
+        url(r'^modificar/(?P<pk>\w+)', modificarCuenta),
+        url(r'^consultar/(?P<pk>\w+)', consultarCuenta),
     ])),
 
     # CRUD Tarjetas
     url(r'^tarjeta/', include([
         url(r'^agregar$', agregarTarjeta),
-        url(r'^modificar/(?P<pk>\d+)', modificarTarjeta),
-        url(r'^consultar/(?P<pk>\d+)', consultarTarjeta),
+        url(r'^modificar/(?P<pk>\w+)', modificarTarjeta),
+        url(r'^consultar/(?P<pk>\w+)', consultarTarjeta),
     ])),
 
     # CRUD Ingresos
     url(r'^ingreso', include([
         url(r'^agregar$', agregarIngreso),
-        url(r'^modificar/(?P<pk>\d+)', modificarIngreso),
-        url(r'^consultar/(?P<pk>\d+)', consultarIngreso),
+        url(r'^modificar/(?P<pk>\w+)', modificarIngreso),
+        url(r'^consultar/(?P<pk>\w+)', consultarIngreso),
     ])),
 
     # CRUD Egresos
     url(r'^egreso/', include([
         url(r'^agregar$', agregarEgreso),
-        url(r'^modificar/(?P<pk>\d+)', modificarEgreso),
-        url(r'^consultar/(?P<pk>\d+)', consultarEgreso),
+        url(r'^modificar/(?P<pk>\w+)', modificarEgreso),
+        url(r'^consultar/(?P<pk>\w+)', consultarEgreso),
     ])),
 
 
